@@ -13,6 +13,7 @@ import com.drvc.cursomc.domain.Category;
 import com.drvc.cursomc.domain.City;
 import com.drvc.cursomc.domain.Customer;
 import com.drvc.cursomc.domain.CustomerOrder;
+import com.drvc.cursomc.domain.OrderItem;
 import com.drvc.cursomc.domain.Payment;
 import com.drvc.cursomc.domain.PaymentBill;
 import com.drvc.cursomc.domain.PaymentCard;
@@ -24,6 +25,7 @@ import com.drvc.cursomc.repositories.AddressRepository;
 import com.drvc.cursomc.repositories.CategoryRepository;
 import com.drvc.cursomc.repositories.CityRepository;
 import com.drvc.cursomc.repositories.CustomerRepository;
+import com.drvc.cursomc.repositories.OrderItemRepository;
 import com.drvc.cursomc.repositories.OrderRepository;
 import com.drvc.cursomc.repositories.PaymentRepository;
 import com.drvc.cursomc.repositories.ProductRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner{
 	private OrderRepository orderRepository;
 	@Autowired
 	private PaymentRepository paymentRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -112,5 +116,17 @@ public class CursomcApplication implements CommandLineRunner{
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 		
+		OrderItem ip1 = new OrderItem(order1, p1, 0.00, 1, 2000.00);
+		OrderItem ip2 = new OrderItem(order1, p3, 0.00, 2, 80.00);
+		OrderItem ip3 = new OrderItem(order2, p2, 100.00, 1, 800.00);
+		
+		order1.getItens().addAll(Arrays.asList(ip1, ip2));
+		order2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		orderItemRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 }
