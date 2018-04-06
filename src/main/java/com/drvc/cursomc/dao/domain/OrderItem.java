@@ -67,7 +67,7 @@ public class OrderItem implements Serializable {
 	public CustomerOrder getOrder() {
 		return id.getOrder();
 	}
-	
+		
 	public Product getProduct() {
 		return id.getProduct();
 	}
