@@ -18,7 +18,7 @@ import com.drvc.cursomc.domain.enums.CustomerType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Customer implements Serializable{
+public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -36,6 +36,9 @@ public class Customer implements Serializable{
 	@ElementCollection
 	@CollectionTable(name="telephone")
 	private Set<String> telephones = new HashSet<>();
+	
+	@OneToMany(mappedBy="customer")
+	private List<CustomerOrder> orders = new ArrayList<>();
 	
 	public Customer() {}
 	
@@ -103,6 +106,14 @@ public class Customer implements Serializable{
 	public void setTelephones(Set<String> telephones) {
 		this.telephones = telephones;
 	}	
+	
+	public List<CustomerOrder> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<CustomerOrder> orders) {
+		this.orders = orders;
+	}
 
 	@Override
 	public int hashCode() {
